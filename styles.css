@@ -1,297 +1,231 @@
-/* Общие стили */
+/* ===== ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ ===== */
+:root {
+    --deep-blue: #0a192f;       /* Основной тёмно-синий */
+    --navy-blue: #0a1a2b;       /* Почти чёрный синий */
+    --accent-blue: #1e3a5f;     /* Акцентный синий */
+    --steel-blue: #2c4c6b;      /* Стальной синий для границ */
+    --soft-white: #e6f1ff;      /* Мягкий белый для текста */
+    --glow-blue: #2563eb;       /* Подсветка (тёмный вариант) */
+    --arrow-gray: #8892b0;      /* Серо-синий для стрелок */
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
-    background-color: #0a192f;
-    color: #e6f1ff;
-    min-height: 100vh;
-    overflow-x: hidden;
+    font-family: 'Segoe UI', 'Inter', system-ui, sans-serif;
+    background-color: var(--deep-blue);
+    color: var(--soft-white);
+    line-height: 1.6;
 }
 
-/* Панель навигации */
+/* ===== УЗКАЯ ПАНЕЛЬ НАВИГАЦИИ ===== */
 .navbar {
     position: fixed;
     top: 0;
+    left: 0;
     width: 100%;
-    background-color: #112240;
-    padding: 15px 30px;
+    background-color: rgba(10, 25, 47, 0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--steel-blue);
+    padding: 0.5rem 2rem;
+    z-index: 1000;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    z-index: 1000;
-    box-shadow: 0 4px 20px rgba(0, 10, 30, 0.5);
-    border-bottom: 1px solid #1e3a8a;
 }
 
-.logo {
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: #64ffda;
-    letter-spacing: 1px;
+.nav-title {
+    font-size: 1.5rem;
+    font-weight: 400;
+    letter-spacing: 2px;
+    color: var(--soft-white);
+    border-left: 4px solid var(--glow-blue);
+    padding-left: 1rem;
+    text-shadow: 0 0 8px rgba(37, 99, 235, 0.3);
 }
 
 .nav-buttons {
     display: flex;
-    gap: 15px;
+    gap: 0.8rem;
 }
 
 .nav-btn {
-    background-color: #1d4ed8;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
+    background-color: var(--accent-blue);
+    color: var(--soft-white);
+    border: 1px solid var(--steel-blue);
+    border-radius: 6px;
+    padding: 0.5rem 1.2rem;
+    font-size: 1.1rem;
     cursor: pointer;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .nav-btn:hover {
-    background-color: #3b82f6;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    background-color: var(--glow-blue);
+    border-color: var(--soft-white);
+    box-shadow: 0 0 12px rgba(37, 99, 235, 0.5);
 }
 
-.nav-btn:active {
-    transform: translateY(0);
-}
-
-.nav-btn:disabled {
-    background-color: #1e3a8a;
-    cursor: not-allowed;
-    transform: none;
-    box-shadow: none;
-    opacity: 0.7;
-}
-
-/* Основной контейнер */
-.container {
-    margin-top: 80px;
-    padding: 30px 20px;
-    max-width: 1200px;
+/* ===== ОСНОВНОЙ ТАЙМЛАЙН ===== */
+.timeline-wrapper {
+    margin-top: 85px;  /* Отступ под фиксированную навигацию */
+    padding: 2rem 1rem;
+    max-width: 1000px;
     margin-left: auto;
     margin-right: auto;
 }
 
-/* Таймлайн */
-.timeline {
-    position: relative;
-    padding: 20px 0;
-    margin: 0 auto;
-    max-width: 800px;
+.timeline-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
 }
 
-/* Центральная линия таймлайна */
-.timeline::before {
-    content: '';
+/* ===== ЭЛЕМЕНТ ТАЙМЛАЙНА ===== */
+.timeline-item {
+    position: relative;
+    background: linear-gradient(145deg, #0e1f2e, #0a1725);
+    border-radius: 16px;
+    padding: 1.5rem 2rem;
+    border: 1px solid var(--steel-blue);
+    box-shadow: 0 10px 30px -10px rgba(0,0,0,0.7);
+}
+
+/* ----- СТРЕЛКА СВЕРХУ (УКАЗАТЕЛЬ) ----- */
+.timeline-arrow.top-arrow {
     position: absolute;
+    top: -12px;
     left: 50%;
     transform: translateX(-50%);
-    width: 4px;
-    height: 100%;
-    background: linear-gradient(to bottom, #1e3a8a, #3b82f6, #1e3a8a);
-    border-radius: 2px;
-    box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+    width: 0;
+    height: 0;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-bottom: 15px solid var(--steel-blue);
+    filter: drop-shadow(0 -4px 4px rgba(0,0,0,0.3));
 }
 
-/* Элемент таймлайна */
-.timeline-item {
+.timeline-arrow.top-arrow::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: -12px;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-bottom: 12px solid var(--navy-blue);
+}
+
+/* ----- КОНТЕНТ: ДАТА СЛЕВА, ИНФО СПРАВА ----- */
+.timeline-content {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+}
+
+.timeline-date {
+    flex: 0 0 100px;
     display: flex;
     justify-content: center;
-    align-items: center;
-    margin-bottom: 60px;
-    position: relative;
 }
 
-/* Дата в центре */
-.timeline-date {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #112240;
-    color: #64ffda;
-    padding: 8px 20px;
-    border-radius: 20px;
-    font-weight: 600;
-    z-index: 10;
-    border: 2px solid #1e3a8a;
-    box-shadow: 0 0 15px rgba(30, 58, 138, 0.7);
-    min-width: 150px;
+.date-badge {
+    background-color: var(--accent-blue);
+    border: 2px solid var(--glow-blue);
+    border-radius: 50px;
+    padding: 0.6rem 1rem;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--soft-white);
+    text-shadow: 0 0 6px var(--glow-blue);
+    box-shadow: 0 0 15px rgba(37,99,235,0.2);
+    min-width: 100px;
     text-align: center;
+    letter-spacing: 2px;
 }
 
-/* Контент слева и справа */
-.timeline-content {
-    width: 40%;
-    padding: 20px;
-    background-color: #112240;
-    border-radius: 8px;
-    border: 1px solid #1e3a8a;
-    box-shadow: 0 5px 15px rgba(0, 10, 30, 0.5);
-    transition: transform 0.3s ease;
+.timeline-info {
+    flex: 1;
+    border-left: 2px dashed var(--steel-blue);
+    padding-left: 1.8rem;
 }
 
-.timeline-content:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0, 10, 30, 0.7);
-}
-
-.timeline-content.left {
-    margin-right: auto;
-    margin-left: 0;
-}
-
-.timeline-content.right {
-    margin-left: auto;
-    margin-right: 0;
-}
-
-/* Стрелки таймлайна */
-.timeline-content.left::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    right: -10px;
-    transform: translateY(-50%);
-    width: 0;
-    height: 0;
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;
-    border-left: 10px solid #112240;
-}
-
-.timeline-content.right::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: -10px;
-    transform: translateY(-50%);
-    width: 0;
-    height: 0;
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;
-    border-right: 10px solid #112240;
-}
-
-/* Заголовок контента */
-.content-title {
-    font-size: 1.3rem;
-    font-weight: 600;
-    margin-bottom: 10px;
-    color: #64ffda;
-    border-bottom: 1px solid #1e3a8a;
-    padding-bottom: 8px;
-}
-
-/* Описание контента */
-.content-description {
-    line-height: 1.6;
-    color: #ccd6f6;
-}
-
-/* Кнопка перехода к следующему элементу */
-.timeline-next-btn {
-    display: block;
-    margin: 0 auto 40px;
-    background-color: #1d4ed8;
-    color: white;
-    border: none;
-    padding: 12px 25px;
-    border-radius: 4px;
-    cursor: pointer;
+.info-title {
+    font-size: 1.6rem;
     font-weight: 500;
-    transition: all 0.3s ease;
-    position: relative;
-    z-index: 10;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    margin-bottom: 0.6rem;
+    color: #bbd4ff;
+    border-bottom: 1px solid var(--steel-blue);
+    padding-bottom: 0.3rem;
 }
 
-.timeline-next-btn:hover {
-    background-color: #3b82f6;
-    transform: translateY(-3px);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+.info-text {
+    color: #a8c0d0;
+    font-size: 1.05rem;
+    margin-bottom: 0.5rem;
 }
 
-.timeline-next-btn:active {
-    transform: translateY(0);
+/* ----- КНОПКА-СТРЕЛКА "К СЛЕДУЮЩЕМУ" ----- */
+.timeline-next {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1.2rem;
+    border-top: 1px solid var(--steel-blue);
+    padding-top: 1.2rem;
 }
 
-/* Индикатор текущего элемента */
-.timeline-item.active .timeline-date {
-    background-color: #1e3a8a;
-    box-shadow: 0 0 20px rgba(59, 130, 246, 0.9);
-    color: #ffffff;
+.next-event-btn {
+    background: transparent;
+    color: var(--arrow-gray);
+    border: 1px solid var(--steel-blue);
+    border-radius: 30px;
+    padding: 0.6rem 2rem;
+    font-size: 1rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: all 0.25s;
+    letter-spacing: 1px;
 }
 
-/* Подвал */
-.footer {
-    text-align: center;
-    padding: 20px;
-    margin-top: 40px;
-    color: #8892b0;
-    font-size: 0.9rem;
-    border-top: 1px solid #1e3a8a;
+.next-event-btn:hover {
+    background-color: var(--accent-blue);
+    color: white;
+    border-color: var(--glow-blue);
+    box-shadow: 0 0 12px #1e3a5f;
+    transform: translateY(2px);
 }
 
 /* Адаптивность */
-@media (max-width: 768px) {
-    .timeline::before {
-        left: 30px;
-    }
-
-    .timeline-date {
-        left: 30px;
-        transform: translateX(0);
-        text-align: left;
-        min-width: 120px;
-    }
-
+@media (max-width: 650px) {
     .timeline-content {
-        width: calc(100% - 80px);
-        margin-left: 80px !important;
-        margin-right: 0 !important;
-    }
-
-    .timeline-content.left::after {
-        right: auto;
-        left: -10px;
-        border-left: none;
-        border-right: 10px solid #112240;
-    }
-
-    .timeline-content.right::before {
-        display: none;
-    }
-
-    .nav-buttons {
-        gap: 8px;
-    }
-
-    .nav-btn {
-        padding: 8px 12px;
-        font-size: 0.9rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .navbar {
         flex-direction: column;
-        gap: 15px;
-        padding: 15px;
+        gap: 0.8rem;
     }
-
-    .container {
-        margin-top: 120px;
+    .timeline-date {
+        flex: 0 0 auto;
     }
-
-    .timeline-content {
-        width: calc(100% - 60px);
-        margin-left: 60px !important;
+    .timeline-info {
+        border-left: none;
+        padding-left: 0;
+        border-top: 2px dashed var(--steel-blue);
+        padding-top: 1rem;
+    }
+    .navbar {
+        padding: 0.5rem 1rem;
     }
 }
