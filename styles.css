@@ -1,1 +1,297 @@
+/* Общие стили */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
+body {
+    background-color: #0a192f;
+    color: #e6f1ff;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* Панель навигации */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: #112240;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    box-shadow: 0 4px 20px rgba(0, 10, 30, 0.5);
+    border-bottom: 1px solid #1e3a8a;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #64ffda;
+    letter-spacing: 1px;
+}
+
+.nav-buttons {
+    display: flex;
+    gap: 15px;
+}
+
+.nav-btn {
+    background-color: #1d4ed8;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.nav-btn:hover {
+    background-color: #3b82f6;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.nav-btn:active {
+    transform: translateY(0);
+}
+
+.nav-btn:disabled {
+    background-color: #1e3a8a;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+    opacity: 0.7;
+}
+
+/* Основной контейнер */
+.container {
+    margin-top: 80px;
+    padding: 30px 20px;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Таймлайн */
+.timeline {
+    position: relative;
+    padding: 20px 0;
+    margin: 0 auto;
+    max-width: 800px;
+}
+
+/* Центральная линия таймлайна */
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(to bottom, #1e3a8a, #3b82f6, #1e3a8a);
+    border-radius: 2px;
+    box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+}
+
+/* Элемент таймлайна */
+.timeline-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 60px;
+    position: relative;
+}
+
+/* Дата в центре */
+.timeline-date {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #112240;
+    color: #64ffda;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-weight: 600;
+    z-index: 10;
+    border: 2px solid #1e3a8a;
+    box-shadow: 0 0 15px rgba(30, 58, 138, 0.7);
+    min-width: 150px;
+    text-align: center;
+}
+
+/* Контент слева и справа */
+.timeline-content {
+    width: 40%;
+    padding: 20px;
+    background-color: #112240;
+    border-radius: 8px;
+    border: 1px solid #1e3a8a;
+    box-shadow: 0 5px 15px rgba(0, 10, 30, 0.5);
+    transition: transform 0.3s ease;
+}
+
+.timeline-content:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 10, 30, 0.7);
+}
+
+.timeline-content.left {
+    margin-right: auto;
+    margin-left: 0;
+}
+
+.timeline-content.right {
+    margin-left: auto;
+    margin-right: 0;
+}
+
+/* Стрелки таймлайна */
+.timeline-content.left::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: -10px;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 10px solid #112240;
+}
+
+.timeline-content.right::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: -10px;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-right: 10px solid #112240;
+}
+
+/* Заголовок контента */
+.content-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #64ffda;
+    border-bottom: 1px solid #1e3a8a;
+    padding-bottom: 8px;
+}
+
+/* Описание контента */
+.content-description {
+    line-height: 1.6;
+    color: #ccd6f6;
+}
+
+/* Кнопка перехода к следующему элементу */
+.timeline-next-btn {
+    display: block;
+    margin: 0 auto 40px;
+    background-color: #1d4ed8;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 10;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.timeline-next-btn:hover {
+    background-color: #3b82f6;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+}
+
+.timeline-next-btn:active {
+    transform: translateY(0);
+}
+
+/* Индикатор текущего элемента */
+.timeline-item.active .timeline-date {
+    background-color: #1e3a8a;
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.9);
+    color: #ffffff;
+}
+
+/* Подвал */
+.footer {
+    text-align: center;
+    padding: 20px;
+    margin-top: 40px;
+    color: #8892b0;
+    font-size: 0.9rem;
+    border-top: 1px solid #1e3a8a;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .timeline::before {
+        left: 30px;
+    }
+
+    .timeline-date {
+        left: 30px;
+        transform: translateX(0);
+        text-align: left;
+        min-width: 120px;
+    }
+
+    .timeline-content {
+        width: calc(100% - 80px);
+        margin-left: 80px !important;
+        margin-right: 0 !important;
+    }
+
+    .timeline-content.left::after {
+        right: auto;
+        left: -10px;
+        border-left: none;
+        border-right: 10px solid #112240;
+    }
+
+    .timeline-content.right::before {
+        display: none;
+    }
+
+    .nav-buttons {
+        gap: 8px;
+    }
+
+    .nav-btn {
+        padding: 8px 12px;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar {
+        flex-direction: column;
+        gap: 15px;
+        padding: 15px;
+    }
+
+    .container {
+        margin-top: 120px;
+    }
+
+    .timeline-content {
+        width: calc(100% - 60px);
+        margin-left: 60px !important;
+    }
+}
