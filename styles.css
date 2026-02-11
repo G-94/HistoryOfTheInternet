@@ -15,6 +15,7 @@
     box-sizing: border-box;
 }
 
+/* ✅ ГРАДИЕНТ РАБОТАЕТ! */
 body {
     background: radial-gradient(circle at 50% 30%, #122b44, #0a1a2c 80%);
     color: var(--glacial);
@@ -23,7 +24,7 @@ body {
     min-height: 100vh;
 }
 
-/* ===== НАВИГАЦИОННАЯ ПАНЕЛЬ (УЗКАЯ, С КНОПКАМИ ДАТ) ===== */
+/* ===== НАВИГАЦИОННАЯ ПАНЕЛЬ ===== */
 .navbar {
     position: fixed;
     top: 0;
@@ -89,7 +90,7 @@ body {
     font-weight: 700;
 }
 
-/* СТРЕЛКИ НАВИГАЦИИ (ДОП.) */
+/* СТРЕЛКИ НАВИГАЦИИ */
 .nav-arrows {
     display: flex;
     gap: 0.3rem;
@@ -126,7 +127,7 @@ body {
     position: relative;
 }
 
-/* САМ ЭЛЕМЕНТ ТАЙМЛАЙНА */
+/* ЭЛЕМЕНТ ТАЙМЛАЙНА */
 .timeline-item {
     position: relative;
     background: linear-gradient(145deg, #0e2238, #0a1a2c);
@@ -136,7 +137,7 @@ body {
     box-shadow: 0 20px 35px -12px black;
 }
 
-/* СТРЕЛКА СВЕРХУ (ВЕДЁТ К ЭТОМУ СОБЫТИЮ) */
+/* СТРЕЛКА СВЕРХУ */
 .arrow.top-arrow {
     position: absolute;
     top: -14px;
