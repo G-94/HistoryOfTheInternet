@@ -3,33 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Тёмно-синий таймлайн</title>
+    <title>Тёмный хронологический таймлайн</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Панель навигации -->
+
+    <!-- УЗКАЯ ПАНЕЛЬ НАВИГАЦИИ (ВСЕГДА ВИДНА) -->
     <nav class="navbar">
-        <div class="logo">Исторический Таймлайн</div>
-        <div class="nav-buttons">
-            <button class="nav-btn" id="prev-btn">Назад</button>
-            <button class="nav-btn" id="next-btn">Вперед</button>
-            <button class="nav-btn" id="first-btn">В начало</button>
-            <button class="nav-btn" id="last-btn">В конец</button>
+        <div class="nav-container">
+            <h1 class="nav-title">⏳ Хронос</h1>
+            <div class="nav-buttons">
+                <button id="prevBtn" class="nav-btn" aria-label="Предыдущий">▲</button>
+                <button id="nextBtn" class="nav-btn" aria-label="Следующий">▼</button>
+            </div>
         </div>
     </nav>
 
-    <!-- Основной контейнер -->
-    <div class="container">
-        <!-- Таймлайн -->
-        <div class="timeline" id="timeline">
-            <!-- Элементы таймлайна будут сгенерированы через JavaScript -->
-        </div>
-    </div>
+    <!-- ОСНОВНОЙ КОНТЕЙНЕР С ТАЙМЛАЙНОМ -->
+    <main class="timeline-wrapper">
+        <div class="timeline-container">
 
-    <!-- Подвал -->
-    <footer class="footer">
-        <p>Тёмно-синий таймлайн &copy; 2023. Все права защищены.</p>
-    </footer>
+            <!-- ОДИН ЭЛЕМЕНТ ВЕРТИКАЛЬНОГО ТАЙМЛАЙНА (СТРЕЛКА СВЕРХУ ВНИЗ) -->
+            <div class="timeline-item">
+                
+                <!-- Верхняя стрелка (указывает на этот элемент) -->
+                <div class="timeline-arrow top-arrow"></div>
+
+                <!-- Основной контент: дата слева, описание справа -->
+                <div class="timeline-content">
+                    <div class="timeline-date">
+                        <span class="date-badge">1789</span>
+                    </div>
+                    <div class="timeline-info">
+                        <h2 class="info-title">Начало великой эпохи</h2>
+                        <p class="info-text">В этом году произошло событие, изменившее ход истории. Тёмное небо озарили новые идеи, а ветер перемен коснулся каждого уголка.</p>
+                    </div>
+                </div>
+
+                <!-- Нижняя кнопка-стрелка (переход к следующему) -->
+                <div class="timeline-next">
+                    <button class="next-event-btn" data-next="1">▼ К следующему</button>
+                </div>
+            </div>
+
+            <!-- ВТОРОЙ ЭЛЕМЕНТ (ЗАКОММЕНТИРОВАН, ПРОСТО ДЛЯ ПРИМЕРА) -->
+            <!-- 
+            <div class="timeline-item">
+                <div class="timeline-arrow top-arrow"></div>
+                <div class="timeline-content">
+                    <div class="timeline-date"><span class="date-badge">1812</span></div>
+                    <div class="timeline-info">
+                        <h2 class="info-title">Битва за будущее</h2>
+                        <p class="info-text">Описание события. Текст выполнен в тёмных тонах.</p>
+                    </div>
+                </div>
+                <div class="timeline-next">
+                    <button class="next-event-btn" data-next="2">▼ Далее</button>
+                </div>
+            </div>
+            -->
+        </div>
+    </main>
 
     <script src="script.js"></script>
 </body>
