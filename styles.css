@@ -17,8 +17,7 @@
 
 /* ✅ ГРАДИЕНТ РАБОТАЕТ! */
 body {
-    background-color: #C4A484;
-    background-image: linear-gradient(315deg, #C4A484 0%, #fbc6b6 74%);
+    background: linear-gradient(315deg, #C4A484 0%, #fbc6b6 74%);
     color: var(--glacial);
     font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
     line-height: 1.6;
