@@ -1,66 +1,272 @@
-document.addEventListener('DOMContentLoaded', function() {
-    'use strict';
+/* ===== ТЁМНО-СИНИЕ ТОНА ===== */
+:root {
+    --night-sky: #0b1a2e;       /* Основной фон, глубокий синий */
+    --midnight-blue: #0e2238;    /* Карточки событий */
+    --cobalt: #1e3a5a;          /* Акценты, границы */
+    --steel-mist: #314d6b;      /* Элементы, даты */
+    --glacial: #e0f2fe;         /* Светлый текст, почти белый с голубым */
+    --phosphor: #3291ff;        /* Подсветка, неоновый синий */
+    --arrow-dim: #7090b0;       /* Серо-синий для стрелок */
+}
 
-    // Элементы навигации (верхняя панель)
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
-    
-    // Все события таймлайна (элементы .timeline-item)
-    const timelineItems = document.querySelectorAll('.timeline-item');
-    // Все кнопки "К следующему" внутри элементов
-    const nextButtons = document.querySelectorAll('.next-event-btn');
-    
-    let currentIndex = 0; // Индекс текущего активного элемента (для навигации)
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-    // --- Функция скролла к определённому событию ---
-    function scrollToItem(index) {
-        if (timelineItems.length === 0) return;
-        
-        // Зацикливаем индекс (если нужно)
-        if (index < 0) index = timelineItems.length - 1;
-        if (index >= timelineItems.length) index = 0;
-        
-        const targetItem = timelineItems[index];
-        if (targetItem) {
-            targetItem.scrollIntoView({
-                behavior: 'smooth',
-                block: 'center'
-            });
-            // Небольшая подсветка активного элемента
-            timelineItems.forEach(item => item.style.borderColor = 'var(--steel-blue)');
-            targetItem.style.borderColor = '#2563eb';
-            targetItem.style.transition = 'border-color 0.3s';
-        }
-        currentIndex = index;
+body {
+    background-color: var(--night-sky);
+    color: var(--glacial);
+    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+    line-height: 1.6;
+}
+
+/* ===== НАВИГАЦИОННАЯ ПАНЕЛЬ (УЗКАЯ, С КНОПКАМИ ДАТ) ===== */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(8, 20, 36, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--cobalt);
+    padding: 0.4rem 2rem;
+    z-index: 1000;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
+}
+
+.nav-container {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.nav-title {
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: #c6e0ff;
+    border-right: 2px solid var(--phosphor);
+    padding-right: 1.5rem;
+    letter-spacing: 3px;
+}
+
+/* КНОПКИ ДАТ В НАВИГАЦИИ */
+.nav-date-buttons {
+    display: flex;
+    gap: 0.7rem;
+    flex-wrap: wrap;
+}
+
+.date-nav-btn {
+    background: transparent;
+    border: 1.5px solid var(--steel-mist);
+    color: #bbd4ff;
+    padding: 0.4rem 1.2rem;
+    border-radius: 30px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+    letter-spacing: 0.5px;
+}
+
+.date-nav-btn:hover {
+    background: var(--cobalt);
+    border-color: var(--phosphor);
+    color: white;
+    box-shadow: 0 0 10px #1e4b6e;
+}
+
+.date-nav-btn.active {
+    background: var(--phosphor);
+    border-color: #7eb6ff;
+    color: black;
+    font-weight: 700;
+}
+
+/* СТРЕЛКИ НАВИГАЦИИ (ДОП.) */
+.nav-arrows {
+    display: flex;
+    gap: 0.3rem;
+}
+
+.nav-arrow {
+    background: var(--cobalt);
+    border: none;
+    color: white;
+    border-radius: 6px;
+    padding: 0.4rem 0.9rem;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.nav-arrow:hover {
+    background: var(--phosphor);
+}
+
+/* ===== ОСНОВНОЙ ТАЙМЛАЙН ===== */
+.timeline-wrapper {
+    margin-top: 90px;
+    padding: 2rem 1.5rem;
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.timeline-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2.8rem;
+    position: relative;
+}
+
+/* САМ ЭЛЕМЕНТ ТАЙМЛАЙНА */
+.timeline-item {
+    position: relative;
+    background: linear-gradient(145deg, #0e2238, #0a1a2c);
+    border: 1px solid #1f405e;
+    border-radius: 24px;
+    padding: 1.8rem 2.2rem;
+    box-shadow: 0 20px 35px -12px black;
+}
+
+/* СТРЕЛКА СВЕРХУ (ВЕДЁТ К ЭТОМУ СОБЫТИЮ) */
+.arrow.top-arrow {
+    position: absolute;
+    top: -14px;
+    left: 15%;
+    width: 0;
+    height: 0;
+    border-left: 14px solid transparent;
+    border-right: 14px solid transparent;
+    border-bottom: 14px solid #1f405e;
+    filter: drop-shadow(0 -2px 4px black);
+}
+
+.arrow.top-arrow::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: -11px;
+    border-left: 11px solid transparent;
+    border-right: 11px solid transparent;
+    border-bottom: 11px solid #0a1f31;
+}
+
+/* КОНТЕНТ: ДАТА СЛЕВА, ИНФО СПРАВА */
+.timeline-content {
+    display: flex;
+    gap: 2.2rem;
+    align-items: flex-start;
+}
+
+.timeline-date {
+    flex: 0 0 110px;
+    display: flex;
+    justify-content: center;
+}
+
+.date-badge {
+    background: #142c44;
+    border: 2px solid #2c5c7c;
+    border-radius: 60px;
+    padding: 0.6rem 0.9rem;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #e2f0ff;
+    text-shadow: 0 0 8px #0077ff;
+    min-width: 110px;
+    text-align: center;
+    box-shadow: inset 0 -2px 0 #0a1a2f;
+}
+
+.timeline-info {
+    flex: 1;
+    border-left: 2px dashed #2f5170;
+    padding-left: 2rem;
+}
+
+.info-title {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #cde2ff;
+    margin-bottom: 0.4rem;
+    line-height: 1.2;
+}
+
+.info-text {
+    color: #afc9df;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.info-tag {
+    display: inline-block;
+    background: #0d3146;
+    border-radius: 20px;
+    padding: 0.2rem 1rem;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: #aad0ff;
+    border: 1px solid #386282;
+}
+
+/* КНОПКА "К СЛЕДУЮЩЕМУ" */
+.next-button-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1.5rem;
+    border-top: 1px solid #1f405e;
+    padding-top: 1.3rem;
+}
+
+.next-event-btn {
+    background: transparent;
+    color: #b0d4f0;
+    border: 1px solid #386282;
+    border-radius: 40px;
+    padding: 0.5rem 2.2rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.next-event-btn:hover {
+    background: #1a405b;
+    color: white;
+    border-color: #5fa3d1;
+    transform: translateY(2px);
+    box-shadow: 0 5px 10px #0b1c2c;
+}
+
+/* АДАПТАЦИЯ */
+@media (max-width: 700px) {
+    .timeline-content {
+        flex-direction: column;
+        gap: 0.8rem;
     }
-
-    // --- Обработчики для верхней навигации ---
-    if (prevBtn) {
-        prevBtn.addEventListener('click', function() {
-            scrollToItem(currentIndex - 1);
-        });
+    .timeline-info {
+        border-left: none;
+        padding-left: 0;
+        border-top: 2px dashed #2f5170;
+        padding-top: 1rem;
     }
-
-    if (nextBtn) {
-        nextBtn.addEventListener('click', function() {
-            scrollToItem(currentIndex + 1);
-        });
+    .navbar {
+        padding: 0.5rem 1rem;
     }
-
-    // --- Обработчики для кнопок "К следующему" внутри таймлайна ---
-    nextButtons.forEach((btn, idx) => {
-        btn.addEventListener('click', function(e) {
-            e.preventDefault();
-            // Переход к следующему элементу (если есть)
-            scrollToItem(idx + 1);
-        });
-    });
-
-    // --- Дополнительно: при загрузке выделяем первый элемент ---
-    if (timelineItems.length > 0) {
-        timelineItems[0].style.borderColor = '#2563eb';
+    .nav-date-buttons {
+        order: 3;
+        margin-top: 0.5rem;
+        width: 100%;
+        justify-content: center;
     }
-
-    // --- Небольшая магия: плавное появление стрелок сверху (CSS уже сделал) ---
-    console.log('Тёмный таймлайн активирован');
-});
+}
