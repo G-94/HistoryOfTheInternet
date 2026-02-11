@@ -16,10 +16,11 @@
 }
 
 body {
-    background-color: var(--night-sky);
+    background: radial-gradient(circle at 50% 30%, #122b44, #0a1a2c 80%);
     color: var(--glacial);
     font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
     line-height: 1.6;
+    min-height: 100vh;
 }
 
 /* ===== НАВИГАЦИОННАЯ ПАНЕЛЬ (УЗКАЯ, С КНОПКАМИ ДАТ) ===== */
