@@ -5,8 +5,61 @@ document.addEventListener('DOMContentLoaded', () => {
     const nextButtons = document.querySelectorAll('.next-event-btn');
     const prevNav = document.getElementById('navPrevBtn');
     const nextNav = document.getElementById('navNextBtn');
+    
+    // ===== ЭЛЕМЕНТЫ ДЛЯ СВОРАЧИВАНИЯ =====
+    const navbar = document.querySelector('.navbar');
+    const navContainer = document.querySelector('.nav-container');
+    const navTitle = document.querySelector('.nav-title');
+    const navDateButtons = document.getElementById('navDateButtons');
+    const navArrows = document.querySelector('.nav-arrows');
 
     let currentIndex = 0;
+    let isNavCollapsed = false;
+
+    // ===== СОЗДАЕМ КНОПКУ СВОРАЧИВАНИЯ =====
+    const collapseBtn = document.createElement('button');
+    collapseBtn.className = 'collapse-nav-btn';
+    collapseBtn.innerHTML = '▲';
+    collapseBtn.setAttribute('aria-label', 'Свернуть навигацию');
+    
+    // Вставляем кнопку в навбар
+    if (navbar) {
+        navbar.appendChild(collapseBtn);
+    }
+
+    // ===== ФУНКЦИЯ СВОРАЧИВАНИЯ/РАЗВОРАЧИВАНИЯ =====
+    function toggleNavCollapse() {
+        isNavCollapsed = !isNavCollapsed;
+        
+        if (isNavCollapsed) {
+            // Сворачиваем
+            navbar.classList.add('collapsed');
+            collapseBtn.innerHTML = '▼';
+            collapseBtn.setAttribute('aria-label', 'Развернуть навигацию');
+            
+            // Скрываем кнопки дат и стрелки
+            if (navDateButtons) navDateButtons.style.display = 'none';
+            if (navArrows) navArrows.style.display = 'none';
+            
+            // Уменьшаем отступ для контента
+            document.querySelector('.timeline-wrapper').style.marginTop = '70px';
+        } else {
+            // Разворачиваем
+            navbar.classList.remove('collapsed');
+            collapseBtn.innerHTML = '▲';
+            collapseBtn.setAttribute('aria-label', 'Свернуть навигацию');
+            
+            // Показываем кнопки дат и стрелки
+            if (navDateButtons) navDateButtons.style.display = 'flex';
+            if (navArrows) navArrows.style.display = 'flex';
+            
+            // Возвращаем отступ
+            document.querySelector('.timeline-wrapper').style.marginTop = '90px';
+        }
+    }
+
+    // ===== ОБРАБОТЧИК КНОПКИ СВОРАЧИВАНИЯ =====
+    collapseBtn.addEventListener('click', toggleNavCollapse);
 
     // ===== ФУНКЦИЯ ПРОКРУТКИ К ЭЛЕМЕНТУ =====
     function scrollToItem(index) {
@@ -31,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // Подсветка элемента таймлайна (опционально)
+        // Подсветка элемента таймлайна
         timelineItems.forEach(item => item.style.borderColor = '#1f405e');
         target.style.borderColor = '#3291ff';
         target.style.transition = 'border-color 0.25s';
@@ -39,14 +92,14 @@ document.addEventListener('DOMContentLoaded', () => {
         currentIndex = index;
     }
 
-    // ===== ОБРАБОТЧИКИ КНОПОК ДАТ (В НАВИГАЦИИ) =====
+    // ===== ОБРАБОТЧИКИ КНОПОК ДАТ =====
     dateNavButtons.forEach((btn, idx) => {
         btn.addEventListener('click', () => {
             scrollToItem(idx);
         });
     });
 
-    // ===== КНОПКИ "ПРЕД." / "СЛЕД." В НАВИГАЦИИ =====
+    // ===== КНОПКИ "ПРЕД." / "СЛЕД." =====
     if (prevNav) {
         prevNav.addEventListener('click', () => scrollToItem(currentIndex - 1));
     }
@@ -54,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
         nextNav.addEventListener('click', () => scrollToItem(currentIndex + 1));
     }
 
-    // ===== КНОПКИ "К СЛЕДУЮЩЕМУ СОБЫТИЮ" ВНУТРИ ТАЙМЛАЙНА =====
+    // ===== КНОПКИ "К СЛЕДУЮЩЕМУ СОБЫТИЮ" =====
     nextButtons.forEach((btn) => {
         btn.addEventListener('click', function(e) {
             e.preventDefault();
@@ -70,28 +123,18 @@ document.addEventListener('DOMContentLoaded', () => {
         scrollToItem(0);
     }
 
-    // ===== ДИНАМИЧЕСКОЕ ОБНОВЛЕНИЕ КНОПОК ДАТ (ЕСЛИ НУЖНО) =====
-    // Можно автоматически собрать даты из data-атрибутов
-    function syncNavButtonsFromTimeline() {
-        const navContainer = document.getElementById('navDateButtons');
-        if (navContainer && timelineItems.length) {
-            // Очищаем и создаём кнопки на основе дат из .timeline-item
-            navContainer.innerHTML = '';
-            timelineItems.forEach((item, i) => {
-                const date = item.dataset.date || `Событие ${i+1}`;
-                const btn = document.createElement('button');
-                btn.className = 'date-nav-btn';
-                btn.dataset.index = i;
-                btn.textContent = date;
-                btn.addEventListener('click', () => scrollToItem(i));
-                navContainer.appendChild(btn);
-            });
-            // Обновляем коллекцию кнопок
-            location.reload(); // Упрощённо: можно обновить ссылки, но мы перезагрузим коллекцию
+    // ===== АВТОМАТИЧЕСКОЕ СВОРАЧИВАНИЕ НА МОБИЛЬНЫХ =====
+    function handleMobileCollapse() {
+        if (window.innerWidth <= 768) {
+            if (!isNavCollapsed) {
+                toggleNavCollapse();
+            }
         }
     }
 
-    // Если вы хотите автоматически заполнить навигацию датами из data-date,
-    // раскомментируйте строку ниже. Сейчас она закомментирована, т.к. кнопки уже есть в HTML.
-    // syncNavButtonsFromTimeline();
+    // Проверяем при загрузке
+    handleMobileCollapse();
+
+    // Проверяем при изменении размера окна
+    window.addEventListener('resize', handleMobileCollapse);
 });
