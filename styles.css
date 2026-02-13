@@ -450,3 +450,54 @@ body::before {
         padding-top: 0;
     }
 }
+
+/* ===== КНОПКА СВОРАЧИВАНИЯ ===== */
+.collapse-nav-btn {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--cobalt);
+    border: 1px solid var(--phosphor);
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    z-index: 1001;
+}
+
+.collapse-nav-btn:hover {
+    background: var(--phosphor);
+    transform: translateY(-50%) scale(1.1);
+}
+
+/* Свернутое состояние */
+.navbar.collapsed {
+    padding: 0.2rem 2rem;
+}
+
+.navbar.collapsed .nav-title {
+    font-size: 1.2rem;
+    border-right: none;
+    padding-right: 0;
+}
+
+/* Адаптация для мобильных */
+@media screen and (max-width: 768px) {
+    .collapse-nav-btn {
+        right: 10px;
+        width: 25px;
+        height: 25px;
+        font-size: 0.8rem;
+    }
+    
+    .navbar.collapsed {
+        padding: 0.2rem 1rem;
+    }
+}
